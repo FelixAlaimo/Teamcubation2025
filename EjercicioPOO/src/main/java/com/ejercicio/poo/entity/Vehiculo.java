@@ -12,6 +12,16 @@ public abstract class Vehiculo {
 	public abstract int acelerar(int cantidad);
 	public abstract int frenar(int cantidad);
 	
+	public Vehiculo() {
+		// default empty constructor
+	}
+	
+	public Vehiculo(String marca, String modelo, int año) {
+		this.marca = marca;
+		this.modelo = modelo;
+		this.año = año;
+	}
+	
 	public String getMarca() {
 		return marca;
 	}
@@ -47,12 +57,20 @@ public abstract class Vehiculo {
 		this.velocidadMaxima = velocidadMaxima;
 	}
 	
-	public String detallesVehiculo() {
-		return "Marca: " + this.marca != null ? this.marca : "N/A"
-				+ " Modelo: " + this.modelo != null ? this.modelo : "N/A"
-				+ " Año: " + this.año + " VelocidadActual: " + this.velocidadActual
-				+ " VelocidadMaxima: " + this.velocidadMaxima
-				;
+	public final String detallesVehiculo() {
+		return "\"Marca\": \"" + (this.marca != null ? this.marca : "N/A")
+				+ "\", \"Modelo\": \"" + (this.modelo != null ? this.modelo : "N/A")
+				+ "\", \"Año\": \"" + this.año
+				+ "\", \"VelocidadActual\": \"" + this.velocidadActual
+				+ "\", \"VelocidadMaxima\": \"" + this.velocidadMaxima + "\"";
+	}
+	
+	public String limitacionesDeAceleracion() {
+		return "No hay limitaciones de aceleracion para este Vehiculo";
+	}
+	
+	public String limitacionesDeFrenado() {
+		return "No hay limitaciones de frenado para este Vehiculo";
 	}
 
 }

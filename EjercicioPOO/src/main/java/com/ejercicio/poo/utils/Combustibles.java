@@ -4,6 +4,7 @@ public enum Combustibles {
 	
 	NAFTA,
 	GASOIL,
-	GAS;
+	GAS,
+	ELECTRICIDAD;
 
 }

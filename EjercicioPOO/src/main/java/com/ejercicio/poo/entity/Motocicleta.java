@@ -2,16 +2,22 @@ package com.ejercicio.poo.entity;
 
 public class Motocicleta extends Vehiculo {
 	
-	private String cilindrada;
-
+	private int cilindrada;
+	
 	public Motocicleta() {
 		this.setVelocidadMaxima(230);
 	}
 
-	public String getCilindrada() {
+	public Motocicleta(String marca, String modelo, int año, int cilindrada) {
+		super(marca, modelo, año);
+		this.cilindrada = cilindrada;
+		this.setVelocidadMaxima(230);
+	}
+
+	public int getCilindrada() {
 		return cilindrada;
 	}
-	public void setCilindrada(String cilindrada) {
+	public void setCilindrada(int cilindrada) {
 		this.cilindrada = cilindrada;
 	}
 	
