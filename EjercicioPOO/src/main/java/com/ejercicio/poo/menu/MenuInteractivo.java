@@ -24,10 +24,17 @@ public class MenuInteractivo {
 		vehiculos.add(new Camion("IVECO", "Cursor", 2024, 35000));
 		
         Scanner scanner = new Scanner(System.in);
-        int seleccionDeUsuario;
+        int seleccionDeUsuario = -1;
         do {
             mostrarMenuPrincipal();
-            seleccionDeUsuario = scanner.nextInt();
+            System.out.print("Opcion: ");
+            if (scanner.hasNextInt()) {
+            	seleccionDeUsuario = scanner.nextInt();
+            }
+            else {
+                scanner.next();
+            }
+            
             switch (seleccionDeUsuario) {
                 case 1:
                 	mostrarVehiculosDisponibles(vehiculos);
@@ -49,6 +56,7 @@ public class MenuInteractivo {
     }
 
     public static void mostrarMenuPrincipal() {
+    	System.out.println();
     	System.out.println("******************* MENU PRINCIPAL ********************");
         System.out.println("1. Ver vehículos disponibles");
         System.out.println("2. Acelerar vehículo");
@@ -58,6 +66,7 @@ public class MenuInteractivo {
     }
     
     public static void mostrarVehiculosDisponibles(List<Vehiculo> vehiculos) {
+    	System.out.println();
     	System.out.println("*************** VEHICULOS DISPONIBLES *****************");
     	Integer count = 0;
     	for (Vehiculo v : vehiculos) {
@@ -68,11 +77,18 @@ public class MenuInteractivo {
     }
     
     public static void mostrarMenuCambioDeVelocidad(List<Vehiculo> vehiculos, Scanner scanner, CambioDeVelocidad accion) {
-    	System.out.println("Ingresá el número del vehículo que desees "+accion+", o ingresá 99 para cancelar.");
+    	System.out.println("Ingresá el número del vehículo que desees "+accion+".");
     	int cantidadDeVehiculos = vehiculos.size();
-    	int seleccionDeUsuario;
+    	int seleccionDeUsuario = -1;
     	do {
-            seleccionDeUsuario = scanner.nextInt();
+    		System.out.print("Nro de Vehiculo (99 para cancelar): ");
+    		if (scanner.hasNextInt()) {
+            	seleccionDeUsuario = scanner.nextInt();
+            }
+            else {
+                scanner.next();
+            }
+            
             if (seleccionDeUsuario > 0 && seleccionDeUsuario <= cantidadDeVehiculos) {
             	Vehiculo v = vehiculos.get(seleccionDeUsuario-1);
             	cambiarVelocidad(v, scanner, accion);            		
@@ -89,6 +105,8 @@ public class MenuInteractivo {
 
     
     public static void cambiarVelocidad(Vehiculo v, Scanner scanner, CambioDeVelocidad accion) {
+    	System.out.println();
+    	System.out.println("*******************************************************");
     	System.out.println("Elegiste " + accion.name() + " el siguiente vehículo: ");
     	System.out.println(v.detallesVehiculo());
     	
@@ -101,7 +119,7 @@ public class MenuInteractivo {
     		return;
     	}
     	
-    	System.out.println("Ingresá un valor POSITIVO entre 0 y 250 para " + accion.getPropositoDeCambioDeVelocidad() + " la velocidad, o ingresá 999 para cancelar.");
+    	System.out.println("Ingresá un valor POSITIVO entre 0 y 250 para " + accion.getPropositoDeCambioDeVelocidad() + " la velocidad.");
     	System.out.println("Otras limitaciones:");
     	if (CambioDeVelocidad.ACELERAR.equals(accion)) {
     		System.out.println("Velocidad maxima: "+ v.getVelocidadMaxima());
@@ -111,9 +129,16 @@ public class MenuInteractivo {
     	}
     	System.out.println("*******************************************************");
     	
-    	int seleccionDeUsuario;
+    	int seleccionDeUsuario = -1;
     	do {
-            seleccionDeUsuario = scanner.nextInt();
+    		System.out.print("Velocidad a " + accion.getPropositoDeCambioDeVelocidad() + " (999 para cancelar): ");
+    		if (scanner.hasNextInt()) {
+            	seleccionDeUsuario = scanner.nextInt();
+            }
+            else {
+                scanner.next();
+            }
+    		
             if (seleccionDeUsuario > 0 && seleccionDeUsuario <= 250) {
             	int nuevaVelocidad = CambioDeVelocidad.ACELERAR.equals(accion) ? v.acelerar(seleccionDeUsuario) : v.frenar(seleccionDeUsuario);
             	System.out.println("Nueva velocidad del vehículo: " + nuevaVelocidad);
