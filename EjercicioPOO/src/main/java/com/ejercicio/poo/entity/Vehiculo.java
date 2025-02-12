@@ -58,11 +58,15 @@ public abstract class Vehiculo {
 	}
 	
 	public final String detallesVehiculo() {
-		return "\"Marca\": \"" + (this.marca != null ? this.marca : "N/A")
-				+ "\", \"Modelo\": \"" + (this.modelo != null ? this.modelo : "N/A")
-				+ "\", \"Año\": \"" + this.año
+		return detallesVehiculoPrincipal()
 				+ "\", \"VelocidadActual\": \"" + this.velocidadActual
 				+ "\", \"VelocidadMaxima\": \"" + this.velocidadMaxima + "\"";
+	}
+	
+	public final String detallesVehiculoPrincipal() {
+		return "\"Marca\": \"" + (this.marca != null ? this.marca : "N/A")
+				+ "\", \"Modelo\": \"" + (this.modelo != null ? this.modelo : "N/A")
+				+ "\", \"Año\": \"" + this.año;
 	}
 	
 	public String limitacionesDeAceleracion() {

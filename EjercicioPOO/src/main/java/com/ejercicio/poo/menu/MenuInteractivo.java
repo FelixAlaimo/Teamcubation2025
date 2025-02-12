@@ -40,9 +40,12 @@ public class MenuInteractivo {
                 	mostrarVehiculosDisponibles(vehiculos);
                     break;
                 case 2:
-                	mostrarMenuCambioDeVelocidad(vehiculos, scanner, CambioDeVelocidad.ACELERAR);
+                	mostrarMenuAgregarVehiculo(vehiculos, scanner);
                     break;
                 case 3:
+                	mostrarMenuCambioDeVelocidad(vehiculos, scanner, CambioDeVelocidad.ACELERAR);
+                    break;
+                case 4:
                     mostrarMenuCambioDeVelocidad(vehiculos, scanner, CambioDeVelocidad.FRENAR);
                     break;
                 case 9:
@@ -59,8 +62,9 @@ public class MenuInteractivo {
     	System.out.println();
     	System.out.println("******************* MENU PRINCIPAL ********************");
         System.out.println("1. Ver vehículos disponibles");
-        System.out.println("2. Acelerar vehículo");
-        System.out.println("3. Frenar vehículo");
+        System.out.println("2. Agregar nuevo vehículo");
+        System.out.println("3. Acelerar vehículo");
+        System.out.println("4. Frenar vehículo");
         System.out.println("9. Salir");
         System.out.println("*******************************************************");
     }
@@ -74,6 +78,120 @@ public class MenuInteractivo {
     		System.out.println(count.toString() + ". " + v.detallesVehiculo());
     	}
     	System.out.println("*******************************************************");
+    }
+    
+    public static void mostrarMenuAgregarVehiculo(List<Vehiculo> vehiculos, Scanner scanner) {
+    	mostrarOpcionesDeTiposDeVehiculos();
+        
+        int seleccionDeUsuario = -1;
+        boolean procesoFinalizado = false;
+        do {
+            System.out.print("Tipo de vehiculo: ");
+            if (scanner.hasNextInt()) {
+            	seleccionDeUsuario = scanner.nextInt();
+            }
+            else {
+                scanner.next();
+            }
+            
+            switch (seleccionDeUsuario) {
+                case 1:
+                	procesoFinalizado = agregarNuevoVehiculo(new Automovil(), scanner, vehiculos);
+                    break;
+                case 2:
+                	procesoFinalizado = agregarNuevoVehiculo(new AutoElectrico(), scanner, vehiculos);
+                    break;
+                case 3:
+                	procesoFinalizado = agregarNuevoVehiculo(new Motocicleta(), scanner, vehiculos);
+                    break;
+                case 4:
+                	procesoFinalizado = agregarNuevoVehiculo(new Camion(), scanner, vehiculos);
+                    break;
+                case 9:
+                    System.out.println("Operación Cancelada.");
+                    break;
+                default:
+                	System.out.println("Opción inválida, volvé a intentar.");
+            }
+        } while (seleccionDeUsuario != 9 && !procesoFinalizado);
+    }
+    
+    public static void mostrarOpcionesDeTiposDeVehiculos() {
+    	System.out.println();
+    	System.out.println("*******************************************************");
+    	System.out.println("Seleccione el tipo de vehiculo a agregar");
+    	System.out.println("1. Automovil Standard");
+        System.out.println("2. Automovil Electrico");
+        System.out.println("3. Motocicleta");
+        System.out.println("4. Camion");
+        System.out.println("9. Salir");
+        System.out.println("*******************************************************");
+    }
+    
+    public static boolean agregarNuevoVehiculo(Vehiculo vehiculo, Scanner scanner, List<Vehiculo> vehiculos) {
+    	boolean procesoFinalizado = false;
+    	System.out.println("*******************************************************");
+    	System.out.println("Por favor, ingresá los datos básicos del vehiculo");
+    	
+    	scanner.nextLine();
+    	System.out.print("Marca: ");
+    	vehiculo.setMarca(scanner.nextLine());
+    	
+    	System.out.print("Modelo: ");
+    	vehiculo.setModelo(scanner.nextLine());
+    	
+    	boolean inputValido = false;
+    	do {
+    		System.out.print("Año (solo numeros): ");
+    		if (scanner.hasNextInt()) {
+            	vehiculo.setAño(scanner.nextInt());
+            	inputValido = true;
+            }
+            else {
+            	System.out.println("Valor inválido, volvé a intentar.");
+                scanner.next();
+            }
+    	} while (!inputValido);
+    	System.out.println("");
+    	System.out.println("*******************************************************");
+    	System.out.println("Se creará el siguiente vehículo:");
+    	System.out.println(vehiculo.detallesVehiculoPrincipal());
+    	
+    	boolean accionConfirmadaPorUsuario = false;
+    	int seleccionDeUsuario = -1;
+    	do {
+    		System.out.print("Ingresá 1 para confirmar, 2 para volver a ingresar datos, 3 para cancelar: ");
+    		if (scanner.hasNextInt()) {
+    			seleccionDeUsuario = scanner.nextInt();
+            	switch (seleccionDeUsuario) {
+	                case 1:
+	                	System.out.println("Vehículo agregado OK.");
+	                	vehiculos.add(vehiculo);
+	                	procesoFinalizado = true;
+	                	accionConfirmadaPorUsuario = true;
+	                    break;
+	                case 2:
+	                	System.out.println("Ok, volvamos a cargar los datos.");
+	                	mostrarOpcionesDeTiposDeVehiculos();
+	                	accionConfirmadaPorUsuario = true;
+	                	break;
+	                case 3:
+	                    System.out.println("Operación Cancelada.");
+	                    procesoFinalizado = true;
+	                    accionConfirmadaPorUsuario = true;
+	                    break;
+	                default:
+	                	System.out.println("Opción inválida, volvé a intentar.");
+	            }
+            }
+            else {
+            	System.out.println("Opción inválida, volvé a intentar.");
+                scanner.next();
+            }
+    	} while (!accionConfirmadaPorUsuario);
+    	
+    	
+    	return procesoFinalizado;
     }
     
     public static void mostrarMenuCambioDeVelocidad(List<Vehiculo> vehiculos, Scanner scanner, CambioDeVelocidad accion) {

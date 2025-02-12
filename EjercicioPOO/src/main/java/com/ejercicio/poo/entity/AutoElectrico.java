@@ -6,6 +6,10 @@ public class AutoElectrico extends Automovil implements Electrico {
 	
 	private int cargaDeBateria;
 	
+	public AutoElectrico() {
+		// default empty constructor
+	}
+	
 	public AutoElectrico(String marca, String modelo, int año, int cantidadPuertas, Combustibles tipoCombustible, int cargaDeBateria) {
 		super(marca, modelo, año, cantidadPuertas, tipoCombustible);
 		this.cargaDeBateria = cargaDeBateria;
